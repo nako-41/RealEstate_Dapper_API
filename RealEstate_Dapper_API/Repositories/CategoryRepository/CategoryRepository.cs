@@ -13,6 +13,30 @@ namespace RealEstate_Dapper_API.Repositories.CategoryRepository
             _context = context;
         }
 
+        public async void CreateCategory(CreateCategoryDto categoryDto)
+        {
+            string query = "insert into Category (CategoryName,CategoryStatus) values(@categoryname,@categorystatus)";
+            var parameters = new DynamicParameters();
+            parameters.Add("@categoryname", categoryDto.CategoryName);
+            parameters.Add("@categorystatus", true);
+            using (var con=_context.CreateConnection())
+            {
+                await con.ExecuteAsync(query, parameters);
+            }
+
+        }
+
+        public async void DeleteCategory(int id)
+        {
+            string query = "Delete from Category where  CategoryID=@categoryid";
+            var parameters = new DynamicParameters();
+            parameters.Add("@categoryid",id);
+            using (var con=_context.CreateConnection())
+            {
+                await con.ExecuteAsync(query, parameters);
+            }
+        }
+
         public async Task<List<ResultCategoryDto>> GetAllCategoryAsync()
         {
             string query = "Select * from Category";
@@ -20,6 +44,21 @@ namespace RealEstate_Dapper_API.Repositories.CategoryRepository
             {
                 var values=await connection.QueryAsync<ResultCategoryDto>(query);
                 return values.ToList(); 
+            }
+        }
+
+        public async void UpdateCategory(UpdateCategoryDto updateCategoryDto)
+        {
+            string query = "Update Category Set CategoryName=@categoryname,CategoryStatus=@categorystatus where CategoryID=@categoryid";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@categoryname", updateCategoryDto.CategoryName);
+            parameters.Add("@categorystatus", updateCategoryDto.CategoryStatus);
+            parameters.Add("@categoryid", updateCategoryDto.CategoryID);
+
+            using (var con = _context.CreateConnection())
+            {
+                await con.ExecuteAsync(query, parameters);
             }
         }
     } 
