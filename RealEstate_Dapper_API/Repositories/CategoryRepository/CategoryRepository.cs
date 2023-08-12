@@ -60,6 +60,7 @@ namespace RealEstate_Dapper_API.Repositories.CategoryRepository
             {
                 await con.ExecuteAsync(query, parameters);
             }
+            
         }
     } 
 }
