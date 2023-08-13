@@ -23,6 +23,12 @@ namespace RealEstate_Dapper_API.Controllers
             var values = await _categoryRepository.GetAllCategoryAsync();
             return Ok(values);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> CategoryID(int id)
+        {
+            var values =await _categoryRepository.GetCategoryID(id);
+            return Ok(values);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
