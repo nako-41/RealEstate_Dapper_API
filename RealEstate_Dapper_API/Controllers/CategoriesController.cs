@@ -18,12 +18,14 @@ namespace RealEstate_Dapper_API.Controllers
 
 
         [HttpGet]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CategoryList()
         {
             var values = await _categoryRepository.GetAllCategoryAsync();
             return Ok(values);
         }
         [HttpGet("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CategoryID(int id)
         {
             var values =await _categoryRepository.GetCategoryID(id);
@@ -31,12 +33,14 @@ namespace RealEstate_Dapper_API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategoryDto)
         {
             _categoryRepository.CreateCategory(createCategoryDto);
             return Ok("Kategori basarili sekilde eklendi");
         }
         [HttpDelete]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             _categoryRepository.DeleteCategory(id);
@@ -45,6 +49,7 @@ namespace RealEstate_Dapper_API.Controllers
 
 
         [HttpPut]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDto updateCategoryDto)
         {
             _categoryRepository.UpdateCategory(updateCategoryDto);
