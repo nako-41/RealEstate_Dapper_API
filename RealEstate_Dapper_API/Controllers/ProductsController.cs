@@ -18,7 +18,7 @@ namespace RealEstate_Dapper_API.Controllers
 
 
         [HttpGet]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ProductList()
         {
 
@@ -30,7 +30,7 @@ namespace RealEstate_Dapper_API.Controllers
         // ValidateAntiForgeryToken
 
         [HttpGet("ProductListWithCategory")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ProductListWithCategory()
         {
 

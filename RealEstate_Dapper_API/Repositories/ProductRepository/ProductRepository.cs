@@ -13,12 +13,12 @@ namespace RealEstate_Dapper_API.Repositories.ProductRepository
         {
             _context = context;
         }
-        public async Task<List<ResultProductDto>> GetAllProductAsync()
+        public async Task<List<ResultProductDtos>> GetAllProductAsync()
         {
             string query = "Select * from Product";
             using (var connection = _context.CreateConnection())
             {
-                var values = await connection.QueryAsync<ResultProductDto>(query);
+                var values = await connection.QueryAsync<ResultProductDtos>(query);
                 return values.ToList();
             }
         }
