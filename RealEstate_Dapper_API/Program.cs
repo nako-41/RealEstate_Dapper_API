@@ -1,5 +1,6 @@
 using RealEstate_Dapper_API.Models.DapperContext;
 using RealEstate_Dapper_API.Repositories.CategoryRepository;
+using RealEstate_Dapper_API.Repositories.FormRepository;
 using RealEstate_Dapper_API.Repositories.ProductRepository;
 using RealEstate_Dapper_API.Repositories.WhoWeAreRepository;
 
@@ -10,6 +11,7 @@ builder.Services.AddTransient<Context>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IWhoWeAreDetailRepository, WhoWeAreDetailRepository>();
+builder.Services.AddTransient<IFormRepository, FormRepository>();
 
 
 builder.Services.AddControllers();
