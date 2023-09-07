@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate_Dapper_API.Dtos.CategoryDtos;
+using RealEstate_Dapper_API.Models.DapperContext;
 using RealEstate_Dapper_API.Repositories.CategoryRepository;
+using System.Data;
 
 namespace RealEstate_Dapper_API.Controllers
 {
@@ -10,10 +12,12 @@ namespace RealEstate_Dapper_API.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(ICategoryRepository categoryRepository)
+        public CategoriesController(ICategoryRepository categoryRepository, ILogger<CategoriesController> logger)
         {
             _categoryRepository = categoryRepository;
+            _logger = logger;
         }
 
 
@@ -28,8 +32,43 @@ namespace RealEstate_Dapper_API.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> CategoryID(int id)
         {
+            var result = _categoryRepository.GetCategoryID(id);
+
+            if (result == null )
+            {
+                _logger.LogInformation("there is not id");
+                //return NotFound("id bulunamadi");
+            }
+
+            else
+            {
+                if (result.Id == null)
+                    return NotFound();
+                else
+                {
+                    try
+                    {
+
+                        var result2 =await _categoryRepository.GetCategoryID(id);
+                        _logger.LogInformation("category geldi");
+                        //return result2;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "categori getirilemedi tekrar deneyiniz");
+                        return BadRequest(ex.Message);
+                    }
+                }
+            }
+
             var values =await _categoryRepository.GetCategoryID(id);
+
             return Ok(values);
+
+           // return Ok();
+
+
+
         }
 
         [HttpPost]
